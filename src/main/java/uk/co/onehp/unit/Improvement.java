@@ -17,4 +17,8 @@ public abstract class Improvement {
 	public double applyRepair(double input) {
 		return input;
 	}
+
+	public double applyRange(double input) {
+		return input;
+	}
 }
