@@ -1,12 +1,20 @@
 package uk.co.onehp.unit;
 
-public interface Improvement {
+public abstract class Improvement {
 
-	double applyAttack(double input);
+	public double applyAttack(double input) {
+		return input;
+	}
 
-	double applyDefense(double input);
+	public double applyDefense(double input) {
+		return input;
+	}
 
-	double applySpeed(double input);
+	public double applySpeed(double input) {
+		return input;
+	}
 
-	double applyRepair(double input);
+	public double applyRepair(double input) {
+		return input;
+	}
 }

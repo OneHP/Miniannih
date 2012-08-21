@@ -2,9 +2,13 @@ package uk.co.onehp.factory;
 
 import uk.co.onehp.unit.Improvement;
 
-public interface Workshop {
+public abstract class Workshop {
 
-	double applyProduction(double input);
+	public double applyProduction(double input) {
+		return input;
+	}
 
-	Improvement applyImprovement();
+	public Improvement applyImprovement() {
+		return null;
+	}
 }
