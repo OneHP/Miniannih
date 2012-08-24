@@ -21,4 +21,8 @@ public abstract class Improvement {
 	public double applyRange(double input) {
 		return input;
 	}
+
+	public double applyFireRate(double input) {
+		return input;
+	}
 }
