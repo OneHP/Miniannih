@@ -1,4 +1,4 @@
-package uk.co.onehp.factory;
+package uk.co.onehp.manufactory;
 
 import uk.co.onehp.unit.Improvement;
 

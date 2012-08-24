@@ -1,6 +1,6 @@
-package uk.co.onehp.factory.workshop;
+package uk.co.onehp.manufactory.workshop;
 
-import uk.co.onehp.factory.Workshop;
+import uk.co.onehp.manufactory.Workshop;
 
 public class CapicitorWorkshop extends Workshop {
 
