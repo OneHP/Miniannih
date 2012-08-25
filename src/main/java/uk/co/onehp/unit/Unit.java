@@ -5,11 +5,13 @@ import java.util.List;
 import uk.co.onehp.game.Displayable;
 import uk.co.onehp.game.Updateable;
 
+import com.google.common.collect.Lists;
+
 public abstract class Unit extends Displayable implements Updateable {
 
 	public abstract double getCost();
 
-	private List<Improvement> improvements;
+	private final List<Improvement> improvements = Lists.newArrayList();
 
 	public void addImprovement(Improvement improvement) {
 		if (null != improvement) {
