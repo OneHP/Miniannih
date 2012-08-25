@@ -10,6 +10,11 @@ import uk.co.onehp.unit.UnitFactory;
 import uk.co.onehp.unit.UnitIdentifier;
 
 import com.google.common.collect.Lists;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.shape.Box;
 
 public class Manufactory extends Displayable {
 
@@ -22,6 +27,14 @@ public class Manufactory extends Displayable {
 
 	public Manufactory(Main game, Player owner, Manufactory target) {
 		engage(game, owner, target);
+
+		Box b = new Box(Vector3f.ZERO, 1, 1, 1);
+		Geometry geometry = new Geometry("Box", b);
+
+		Material mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+		mat.setColor("Color", ColorRGBA.White);
+		geometry.setMaterial(mat);
+		draw(geometry);
 	}
 
 	public void addWorkshop(Workshop workshop) {

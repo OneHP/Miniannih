@@ -7,7 +7,7 @@ import com.jme3.scene.Geometry;
 
 public abstract class Displayable implements Updateable {
 
-	private final Geometry geometry = new Geometry();
+	private Geometry geometry = null;
 	private Main game = null;
 	private Player owner = null;
 	private Manufactory target = null;
@@ -20,6 +20,11 @@ public abstract class Displayable implements Updateable {
 		this.game = game;
 		this.owner = owner;
 		this.target = target;
+	}
+
+	public void draw(Geometry geometry) {
+		this.geometry = geometry;
+		this.game.getRootNode().attachChild(geometry);
 	}
 
 	public Player getOwner() {
