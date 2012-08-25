@@ -1,4 +1,6 @@
-package uk.co.onehp.unit;
+package uk.co.onehp.unit.impl;
+
+import uk.co.onehp.unit.Unit;
 
 public class Tank extends Unit {
 

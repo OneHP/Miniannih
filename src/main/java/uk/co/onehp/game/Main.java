@@ -1,5 +1,8 @@
 package uk.co.onehp.game;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -9,6 +12,8 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 
 public class Main extends SimpleApplication {
+
+	private final List<Displayable> gameObjects = Lists.newArrayList();
 
 	public static void main(String[] args) {
 		Main app = new Main();
@@ -29,11 +34,17 @@ public class Main extends SimpleApplication {
 
 	@Override
 	public void simpleUpdate(float tpf) {
-		// TODO: add update code
+		for (Updateable updateable : this.gameObjects) {
+			updateable.update(tpf);
+		}
 	}
 
 	@Override
 	public void simpleRender(RenderManager rm) {
 		// TODO: add render code
+	}
+
+	public void addToGame(Displayable displayable) {
+		this.gameObjects.add(displayable);
 	}
 }

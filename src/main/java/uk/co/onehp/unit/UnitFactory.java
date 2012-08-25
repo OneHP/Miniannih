@@ -1,5 +1,7 @@
 package uk.co.onehp.unit;
 
+import uk.co.onehp.unit.impl.Tank;
+
 public class UnitFactory {
 
 	public static Unit manufacture(UnitIdentifier identifier) {

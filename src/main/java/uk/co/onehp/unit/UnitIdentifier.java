@@ -1,5 +1,7 @@
 package uk.co.onehp.unit;
 
+import uk.co.onehp.unit.impl.Tank;
+
 public enum UnitIdentifier {
 
 	TANK(Tank.COST);
