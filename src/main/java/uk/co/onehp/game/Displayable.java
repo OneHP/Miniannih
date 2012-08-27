@@ -7,6 +7,8 @@ import com.jme3.scene.Geometry;
 
 public abstract class Displayable implements Updateable {
 
+	private static float DEAFULT_SIZE = 1.0f;
+
 	private Geometry geometry = null;
 	private Main game = null;
 	private Player owner = null;
@@ -37,6 +39,14 @@ public abstract class Displayable implements Updateable {
 
 	public Main getGame() {
 		return this.game;
+	}
+
+	public void changeTarget(Manufactory target) {
+		this.target = target;
+	}
+
+	public float getSize() {
+		return DEAFULT_SIZE;
 	}
 
 }

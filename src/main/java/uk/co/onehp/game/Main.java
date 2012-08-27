@@ -3,6 +3,7 @@ package uk.co.onehp.game;
 import java.util.List;
 
 import uk.co.onehp.manufactory.Manufactory;
+import uk.co.onehp.unit.UnitIdentifier;
 
 import com.google.common.collect.Lists;
 import com.jme3.app.SimpleApplication;
@@ -28,7 +29,18 @@ public class Main extends SimpleApplication {
 	public void simpleInitApp() {
 
 		Player player1 = new Player();
-		Manufactory manufactory1 = new Manufactory(this, player1, null);
+		Player player2 = new Player();
+
+		Manufactory manufactory1 = new Manufactory(this, player1, new Vector3f(-20f, 30f, 0));
+		Manufactory manufactory2 = new Manufactory(this, player2, new Vector3f(-20f, -30f, 0));
+		manufactory1.changeTarget(manufactory2);
+		manufactory2.changeTarget(manufactory1);
+
+		manufactory1.changeOrder(UnitIdentifier.TANK);
+		manufactory2.changeOrder(UnitIdentifier.TANK);
+
+		this.gameObjects.add(manufactory1);
+		this.gameObjects.add(manufactory2);
 
 		setupWindow();
 	}

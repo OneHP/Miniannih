@@ -18,6 +18,8 @@ import com.jme3.scene.shape.Box;
 
 public class Manufactory extends Displayable {
 
+	private static float SIZE = 2.0f;
+
 	private static double PRODUCTION_RATE = 1.0;
 
 	private final List<Workshop> workshops = Lists.newArrayList();
@@ -25,16 +27,21 @@ public class Manufactory extends Displayable {
 	private UnitIdentifier order;
 	private double productionCount = 0.0;
 
-	public Manufactory(Main game, Player owner, Manufactory target) {
-		engage(game, owner, target);
+	public Manufactory(Main game, Player owner, Vector3f startPostion) {
+		engage(game, owner, null);
 
-		Box b = new Box(Vector3f.ZERO, 1, 1, 1);
-		Geometry geometry = new Geometry("Box", b);
+		Box box = new Box(startPostion, getSize(), getSize(), getSize());
+		Geometry geometry = new Geometry("Manufactory", box);
 
-		Material mat = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-		mat.setColor("Color", ColorRGBA.White);
-		geometry.setMaterial(mat);
+		Material material = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+		material.setColor("Color", ColorRGBA.White);
+		geometry.setMaterial(material);
 		draw(geometry);
+	}
+
+	@Override
+	public void changeTarget(Manufactory target) {
+		super.changeTarget(target);
 	}
 
 	public void addWorkshop(Workshop workshop) {
@@ -52,6 +59,11 @@ public class Manufactory extends Displayable {
 	public void update(float tpf) {
 		runProduction(tpf);
 		manufactureUnit();
+	}
+
+	@Override
+	public float getSize() {
+		return SIZE;
 	}
 
 	private void manufactureUnit() {
