@@ -18,15 +18,18 @@ public abstract class Displayable implements Updateable {
 		return this.geometry.getLocalTranslation();
 	}
 
-	public void engage(Main game, Player owner, Manufactory target) {
+	public void engage(Main game, Player owner) {
 		this.game = game;
 		this.owner = owner;
-		this.target = target;
 	}
 
 	public void draw(Geometry geometry) {
 		this.geometry = geometry;
 		this.game.getRootNode().attachChild(geometry);
+	}
+
+	public Geometry getGeometry() {
+		return this.geometry;
 	}
 
 	public Player getOwner() {

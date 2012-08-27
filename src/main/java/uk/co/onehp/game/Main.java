@@ -3,6 +3,7 @@ package uk.co.onehp.game;
 import java.util.List;
 
 import uk.co.onehp.manufactory.Manufactory;
+import uk.co.onehp.manufactory.workshop.BasicWorkshop;
 import uk.co.onehp.unit.UnitIdentifier;
 
 import com.google.common.collect.Lists;
@@ -15,6 +16,7 @@ public class Main extends SimpleApplication {
 
 	private static final StatsAppState statsAppState = new StatsAppState();
 	private final List<Displayable> gameObjects = Lists.newArrayList();
+	private final List<Displayable> gameObjectsQueue = Lists.newArrayList();
 
 	public static void main(String[] args) {
 		Main app = new Main();
@@ -28,21 +30,8 @@ public class Main extends SimpleApplication {
 	@Override
 	public void simpleInitApp() {
 
-		Player player1 = new Player();
-		Player player2 = new Player();
-
-		Manufactory manufactory1 = new Manufactory(this, player1, new Vector3f(-20f, 30f, 0));
-		Manufactory manufactory2 = new Manufactory(this, player2, new Vector3f(-20f, -30f, 0));
-		manufactory1.changeTarget(manufactory2);
-		manufactory2.changeTarget(manufactory1);
-
-		manufactory1.changeOrder(UnitIdentifier.TANK);
-		manufactory2.changeOrder(UnitIdentifier.TANK);
-
-		this.gameObjects.add(manufactory1);
-		this.gameObjects.add(manufactory2);
-
 		setupWindow();
+		setupGame();
 	}
 
 	@Override
@@ -50,6 +39,8 @@ public class Main extends SimpleApplication {
 		for (Updateable updateable : this.gameObjects) {
 			updateable.update(tpf);
 		}
+		this.gameObjects.addAll(this.gameObjectsQueue);
+		this.gameObjectsQueue.clear();
 	}
 
 	@Override
@@ -58,12 +49,32 @@ public class Main extends SimpleApplication {
 	}
 
 	public void addToGame(Displayable displayable) {
-		this.gameObjects.add(displayable);
+		this.gameObjectsQueue.add(displayable);
 	}
 
 	private void setupWindow() {
 		this.getCamera().lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
 		this.getCamera().setLocation(new Vector3f(0, 0, 100));
 		this.mouseInput.setCursorVisible(true);
+	}
+
+	private void setupGame() {
+		Player player1 = new Player();
+		Player player2 = new Player();
+
+		Manufactory manufactory1 = new Manufactory(this, player1, new Vector3f(-20f, 30f, 0));
+		Manufactory manufactory2 = new Manufactory(this, player2, new Vector3f(-20f, -30f, 0));
+
+		manufactory1.addWorkshop(new BasicWorkshop());
+		manufactory2.addWorkshop(new BasicWorkshop());
+
+		manufactory1.changeTarget(manufactory2);
+		manufactory2.changeTarget(manufactory1);
+
+		manufactory1.changeOrder(UnitIdentifier.TANK);
+		manufactory2.changeOrder(UnitIdentifier.TANK);
+
+		this.gameObjects.add(manufactory1);
+		this.gameObjects.add(manufactory2);
 	}
 }

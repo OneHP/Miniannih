@@ -4,10 +4,16 @@ import uk.co.onehp.unit.Unit;
 
 public class Tank extends Unit {
 
-	public static double COST = 3;
+	public static double COST = 6;
+	public static float SIZE = 0.8f;
 
 	@Override
 	public double getCost() {
 		return COST;
+	}
+
+	@Override
+	public float getSize() {
+		return SIZE;
 	}
 }

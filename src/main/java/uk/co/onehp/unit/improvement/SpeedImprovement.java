@@ -4,10 +4,10 @@ import uk.co.onehp.unit.Improvement;
 
 public class SpeedImprovement extends Improvement {
 
-	private static double INCREASE = 1.15;
+	private static float INCREASE = 1.15f;
 
 	@Override
-	public double applySpeed(double input) {
+	public float applySpeed(float input) {
 		return input * INCREASE;
 	}
 }

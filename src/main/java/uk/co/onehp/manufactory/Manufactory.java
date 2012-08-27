@@ -28,10 +28,11 @@ public class Manufactory extends Displayable {
 	private double productionCount = 0.0;
 
 	public Manufactory(Main game, Player owner, Vector3f startPostion) {
-		engage(game, owner, null);
+		super.engage(game, owner);
 
-		Box box = new Box(startPostion, getSize(), getSize(), getSize());
+		Box box = new Box(Vector3f.ZERO, getSize(), getSize(), getSize());
 		Geometry geometry = new Geometry("Manufactory", box);
+		geometry.setLocalTranslation(startPostion);
 
 		Material material = new Material(game.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
 		material.setColor("Color", ColorRGBA.White);
@@ -73,7 +74,7 @@ public class Manufactory extends Displayable {
 			for (Workshop workshop : this.workshops) {
 				unit.addImprovement(workshop.applyImprovement());
 			}
-			unit.engage(getGame(), getOwner(), getTarget());
+			unit.deploy(this.getGame(), this, getTarget());
 			getGame().addToGame(unit);
 		}
 	}

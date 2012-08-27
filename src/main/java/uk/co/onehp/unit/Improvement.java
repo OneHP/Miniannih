@@ -10,7 +10,7 @@ public abstract class Improvement {
 		return input;
 	}
 
-	public double applySpeed(double input) {
+	public float applySpeed(float input) {
 		return input;
 	}
 
