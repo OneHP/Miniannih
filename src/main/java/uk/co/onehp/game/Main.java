@@ -63,18 +63,38 @@ public class Main extends SimpleApplication {
 		Player player2 = new Player();
 
 		Manufactory manufactory1 = new Manufactory(this, player1, new Vector3f(-20f, 30f, 0));
-		Manufactory manufactory2 = new Manufactory(this, player2, new Vector3f(-20f, -30f, 0));
+		Manufactory manufactory2 = new Manufactory(this, player1, new Vector3f(0f, 30f, 0));
+		Manufactory manufactory3 = new Manufactory(this, player1, new Vector3f(20f, 30f, 0));
+		Manufactory manufactory4 = new Manufactory(this, player2, new Vector3f(-20f, -30f, 0));
+		Manufactory manufactory5 = new Manufactory(this, player2, new Vector3f(0f, -30f, 0));
+		Manufactory manufactory6 = new Manufactory(this, player2, new Vector3f(20f, -30f, 0));
 
 		manufactory1.addWorkshop(new BasicWorkshop());
 		manufactory2.addWorkshop(new BasicWorkshop());
+		manufactory3.addWorkshop(new BasicWorkshop());
+		manufactory4.addWorkshop(new BasicWorkshop());
+		manufactory5.addWorkshop(new BasicWorkshop());
+		manufactory6.addWorkshop(new BasicWorkshop());
 
-		manufactory1.changeTarget(manufactory2);
-		manufactory2.changeTarget(manufactory1);
+		manufactory1.changeTarget(manufactory4);
+		manufactory2.changeTarget(manufactory5);
+		manufactory3.changeTarget(manufactory6);
+		manufactory4.changeTarget(manufactory1);
+		manufactory5.changeTarget(manufactory2);
+		manufactory6.changeTarget(manufactory3);
 
 		manufactory1.changeOrder(UnitIdentifier.TANK);
 		manufactory2.changeOrder(UnitIdentifier.TANK);
+		manufactory3.changeOrder(UnitIdentifier.TANK);
+		manufactory4.changeOrder(UnitIdentifier.TANK);
+		manufactory5.changeOrder(UnitIdentifier.TANK);
+		manufactory6.changeOrder(UnitIdentifier.TANK);
 
 		this.gameObjects.add(manufactory1);
 		this.gameObjects.add(manufactory2);
+		this.gameObjects.add(manufactory3);
+		this.gameObjects.add(manufactory4);
+		this.gameObjects.add(manufactory5);
+		this.gameObjects.add(manufactory6);
 	}
 }
