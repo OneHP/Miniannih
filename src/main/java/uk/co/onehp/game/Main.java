@@ -1,12 +1,18 @@
 package uk.co.onehp.game;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import uk.co.onehp.manufactory.Manufactory;
 import uk.co.onehp.manufactory.workshop.BasicWorkshop;
 import uk.co.onehp.unit.UnitIdentifier;
 
+import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.jme3.app.SimpleApplication;
 import com.jme3.app.StatsAppState;
 import com.jme3.math.Vector3f;
@@ -52,6 +58,42 @@ public class Main extends SimpleApplication {
 		this.gameObjectsQueue.add(displayable);
 	}
 
+	/**
+	 * Returns objects from the game that are in the area surrounding a central
+	 * point. Ordered by distance from the centre, ascending.
+	 * 
+	 * @param centre
+	 * @param radius
+	 * @return
+	 */
+	public List<Displayable> getGameObjects(Vector3f centre, float radius) {
+		Map<Displayable, Float> objectsInArea = Maps.newHashMap();
+		for (Displayable object : this.gameObjects) {
+			if (!(object instanceof Manufactory)) {
+				float distance = object.getGeometry().getLocalTranslation().distance(centre);
+				if (distance < radius) {
+					objectsInArea.put(object, distance);
+				}
+			}
+		}
+
+		List<Entry<Displayable, Float>> entries = Lists.newArrayList(objectsInArea.entrySet().iterator());
+
+		Collections.sort(entries, new Comparator<Entry<Displayable, Float>>() {
+			@Override
+			public int compare(Entry<Displayable, Float> arg0, Entry<Displayable, Float> arg1) {
+				return arg1.getValue().compareTo(arg1.getValue());
+			}
+		});
+
+		return Lists.transform(entries, new Function<Entry<Displayable, Float>, Displayable>() {
+			@Override
+			public Displayable apply(Entry<Displayable, Float> input) {
+				return input.getKey();
+			}
+		});
+	}
+
 	private void setupWindow() {
 		this.getCamera().lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
 		this.getCamera().setLocation(new Vector3f(0, 0, 100));
@@ -76,11 +118,11 @@ public class Main extends SimpleApplication {
 		manufactory5.addWorkshop(new BasicWorkshop());
 		manufactory6.addWorkshop(new BasicWorkshop());
 
-		manufactory1.changeTarget(manufactory4);
+		manufactory1.changeTarget(manufactory6);
 		manufactory2.changeTarget(manufactory5);
-		manufactory3.changeTarget(manufactory6);
-		manufactory4.changeTarget(manufactory1);
-		manufactory5.changeTarget(manufactory2);
+		manufactory3.changeTarget(manufactory4);
+		manufactory4.changeTarget(manufactory2);
+		manufactory5.changeTarget(manufactory1);
 		manufactory6.changeTarget(manufactory3);
 
 		manufactory1.changeOrder(UnitIdentifier.TANK);
