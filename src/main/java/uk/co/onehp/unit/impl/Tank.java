@@ -4,7 +4,7 @@ import uk.co.onehp.unit.Unit;
 
 public class Tank extends Unit {
 
-	public static double COST = 6;
+	public static double COST = 8;
 	public static float SIZE = 0.8f;
 
 	@Override

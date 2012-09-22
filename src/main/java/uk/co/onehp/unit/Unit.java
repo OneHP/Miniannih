@@ -6,6 +6,8 @@ import uk.co.onehp.game.Displayable;
 import uk.co.onehp.game.Main;
 import uk.co.onehp.game.Player;
 import uk.co.onehp.manufactory.Manufactory;
+import uk.co.onehp.unit.behaviour.AvoidanceStrategy;
+import uk.co.onehp.unit.behaviour.BasicAvoidanceStrategy;
 
 import com.google.common.collect.Lists;
 import com.jme3.material.Material;
@@ -18,11 +20,9 @@ public abstract class Unit extends Displayable {
 
 	private static double DEAFULT_COST = 5;
 	private static float DEAFULT_SPEED = 1;
-	private static float AVOIDANCE_RADIUS = 4;
-	private static float FRIENDLY_AVOIDANCE_STRENGTH = 2f;
-	private static float ENEMY_AVOIDANCE_STRENGTH = 4f;
 
 	private final List<Improvement> improvements = Lists.newArrayList();
+	private final AvoidanceStrategy avoidanceStrategy = new BasicAvoidanceStrategy();
 
 	public void deploy(Main game, Manufactory origin, Manufactory target) {
 		super.engage(game, origin.getOwner());
@@ -56,29 +56,7 @@ public abstract class Unit extends Displayable {
 	public void update(float tpf) {
 		Vector3f targetHeading = this.getTarget().getLocation().subtract(this.getLocation()).normalize();
 
-		Vector3f mean = new Vector3f(1, 1, 0).normalize();
-		int count = 0;
-
-		List<Displayable> neighbours = this.getGame().getGameObjects(this.getLocation(), AVOIDANCE_RADIUS);
-		neighbours.remove(this);
-		for (Displayable neighbour : neighbours) {
-
-			float distance = this.getLocation().distance(neighbour.getLocation());
-			mean = mean.add(this
-					.getLocation()
-					.subtract(neighbour.getLocation())
-					.normalize()
-					.divide(distance)
-					.mult(neighbour.getOwner().equals(this.getOwner()) ? FRIENDLY_AVOIDANCE_STRENGTH
-							: ENEMY_AVOIDANCE_STRENGTH));
-			count++;
-
-		}
-
-		if (count > 0) {
-			mean = mean.divide(count);
-		}
-		targetHeading = targetHeading.mult(mean).normalize();
+		targetHeading = this.avoidanceStrategy.apply(targetHeading, this);
 
 		Vector3f movement = targetHeading.mult(tpf * getSpeed());
 		getGeometry().move(movement);
